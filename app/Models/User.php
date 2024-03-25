@@ -26,9 +26,6 @@ class User extends Authenticatable
         'is_super_admin',
     ];
 
-    protected $dispatchesEvents = [
-        'created' => UserCreated::class,
-    ];
 
     public function tasks(): HasMany
     {
