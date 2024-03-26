@@ -45,7 +45,7 @@ class AttachmentPolicy
      */
     public function delete(User $user, Attachment $attachment): bool
     {
-        return $user->is_super_admin || $user->id === $attachment->user_id || $user->id === $attachment->task->employee_id;
+        return $user->is_super_admin || $user->id === $attachment->user_id || $user->id === $attachment->task->user_id;
     }
 
     /**

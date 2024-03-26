@@ -21,6 +21,7 @@ const form = useForm({
     token: props.token,
     email: props.email,
     password: '',
+    email_verified_at: '',
     password_confirmation: '',
 });
 

@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
+use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -36,6 +38,14 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        User::create([
+            'name' => 'Cristian Paez',
+            'email' => 'cristianpaez009@gmail.com',
+            'password' => bcrypt('Tango$.001'),
+            'email_verified_at' => Carbon::now(),
+            'is_super_admin' => true,
+        ]);
     }
 
     /**

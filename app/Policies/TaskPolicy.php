@@ -13,6 +13,7 @@ class TaskPolicy
      */
     public function viewAny(User $user): bool
     {
+        // Todos los usuarios pueden ver la lista de tareas
         return true;
     }
 
@@ -37,8 +38,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-        return $task->user()->is($user);
-        // return $user->is_super_admin;
+        return $user->is_super_admin;
     }
 
     /**
@@ -50,18 +50,34 @@ class TaskPolicy
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can comment on the model.
      */
-    public function restore(User $user, Task $task): bool
+    public function comment(User $user, Task $task): bool
     {
-        return $user->is_super_admin;
+        return true;
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can attach files to the model.
      */
-    public function forceDelete(User $user, Task $task): bool
+    public function attach(User $user, Task $task): bool
     {
-        return $user->is_super_admin;
+        return true;
+    }
+
+    /**
+     * Determine whether the user can delete attached files from the model.
+     */
+    public function deleteAttachment(User $user, Task $task): bool
+    {
+        return $task->user()->is($user) || $task->attachment->user()->is($user) || $user->is_super_admin;
+    }
+
+    /**
+     * Determine whether the user can update the status of the model.
+     */
+    public function updateStatus(User $user, Task $task): bool
+    {
+        return $task->user()->is($user);
     }
 }
