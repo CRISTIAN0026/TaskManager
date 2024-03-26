@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,13 +13,17 @@ use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index(): Response
     {
+        $users = User::all();
+
         return Inertia::render('Tasks/Index', [
             'tasks' => Task::with('user:id,name')->latest()->get(),
+            'users' => $users,
         ]);
     }
 
@@ -26,7 +32,12 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $this->authorize('create', Task::class);
+        
+        $users = User::all(); 
+        return Inertia::render('Tasks/Create', [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -34,6 +45,8 @@ class TaskController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('create', Task::class);
+
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'required|string|max:255',
@@ -41,7 +54,7 @@ class TaskController extends Controller
             'user_id' => 'required',
         ]);
 
-        $request->user()->tasks()->create($validated);
+        Task::create($validated);
 
         return redirect(route('tasks.index'));
     }

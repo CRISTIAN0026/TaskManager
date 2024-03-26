@@ -33,7 +33,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('tasks.index')" :active="route().current('tasks.index')">
                                     Tareas
                                 </NavLink>
-                                <NavLink :href="route('users.index')" :active="route().current('users.index')">
+                                <NavLink v-if="$page.props.auth.user.is_super_admin" :href="route('users.index')" :active="route().current('users.index')">
                                     Empleados
                                 </NavLink>
                             </div>

@@ -31,9 +31,8 @@ Route::resource('users', UserController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 
-
 Route::resource('tasks', TaskController::class)
-    ->only(['index', 'store', 'update'])
+    ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';

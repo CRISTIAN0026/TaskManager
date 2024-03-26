@@ -14,6 +14,10 @@ class UserController extends Controller
      */
     public function index(): Response
     {
+        if (!auth()->user() || !auth()->user()->is_super_admin) {
+            abort(403);
+        }
+
         return Inertia::render('Users/Index', [
             'users' => User::latest()->get(),
         ]);

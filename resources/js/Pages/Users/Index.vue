@@ -4,7 +4,7 @@ import User from '@/Components/User.vue';
 import Register from '@/Pages/Auth/Register.vue';
 import { Head } from '@inertiajs/vue3';
 
-const as = defineProps(['users']);
+const props = defineProps(['users']);
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const as = defineProps(['users']);
                 style="max-height: 200px; overflow-y: auto;">
                 <User v-for="user in users" :key="user.id" :user="user" />
             </div>
-            <div class="w-full pl-4">
+            <div v-if="$page.props.auth.user.is_super_admin" class="w-full pl-4">
                 <Register />
             </div>
         </div>

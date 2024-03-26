@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -16,11 +17,14 @@ use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display the registration view.
      */
     public function create(): Response
     {
+        $this->authorize('create', User::class);
+
         return Inertia::render('Auth/Register');
     }
 
@@ -31,6 +35,8 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('create', User::class);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
