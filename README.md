@@ -10,11 +10,14 @@ del correo para poder usar el correo electrónico. Seguido de eso puede ejecutar
 
 También tiene que configurar las variables de entorno para poder acceder como super administrador, por ejemplo:
 
+Por defecto se crea un super administrador con esas credenciales para iniciar sesión, recuerde que si quiere hacer las pruebas con el correo electrónico tiene que configurar las variables de entorno.
+
 #### USER_NAME="Administrador"
 #### USER_EMAIL="admin@example.com"
 #### USER_PASSWORD="Brg$.001M"
 #### USER_IS_SUPER_ADMIN=true
 
+Después de eso puede ejecutar `php artisan serve` para levantar el servidor y `npm run dev`. Cuando haga eso esta listo para acceder a las ruta http://127.0.0.1:8000/ con las credenciales que asigno al usuario en el `.env`
 
 ## Acerca de la Aplicación de Tareas
 

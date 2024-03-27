@@ -38,7 +38,7 @@ const submitFiles = () => {
 </script>
 
 <template>
-    <form @submit.prevent="submitFiles">
+    <form @submit.prevent="submitFiles" style="margin-top: 10px;">
         <input type="file" id="file" ref="fileInput" v-on:change="e => handleFileUpload(e)">
         <InputError :message="form.errors.file" class="mt-2" />
         <PrimaryButton class="mt-4">Subir Archivo</PrimaryButton>

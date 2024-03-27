@@ -48,7 +48,7 @@ const form = useForm({
                     </form>
                 </RegisterLayout>
             </div>
-            <div v-if="$page.props.auth.user.is_super_admin" class="w-full pl-4">
+            <div v-if="$page.props.auth.user.is_super_admin && tasks?.length > 0" class="w-full pl-4">
                 <RegisterLayout>
                     <Report />
                 </RegisterLayout>
