@@ -7,23 +7,13 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, Head } from '@inertiajs/vue3';
 
 const props = defineProps(['tasks', 'users']);
-console.log(props)
+
 const form = useForm({
     title: '',
     description: '',
     status: 'Pendiente',
     user_id: '',
 });
-
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => {
-            form.name = '';
-            form.email = '';
-            form.is_super_admin = false;
-        },
-    });
-};
 
 </script>
 
@@ -38,7 +28,7 @@ const submit = () => {
         </template>
         <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 flex">
             <div class="w-full mt-6 bg-white shadow-sm rounded-lg divide-y pr-4">
-                <Task v-for="task in tasks" :key="task.id" :task="task" />
+                <Task v-for="task in tasks" :key="task.id" :task="task" :users="users"/>
             </div>
             <div v-if="$page.props.auth.user.is_super_admin" class="w-full pl-4">
                 <RegisterLayout>
@@ -52,8 +42,7 @@ const submit = () => {
                     <textarea v-model="form.description" placeholder="Description"
                         class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
                     <InputError :message="form.errors.message" class="mt-2" />
-                    <!-- <input v-model="form.user_id" placeholder="Title"> -->
-                    <PrimaryButton class="mt-4">Tasks</PrimaryButton>
+                    <PrimaryButton class="mt-4">Crear tarea</PrimaryButton>
                 </form>
             </RegisterLayout>
             </div>

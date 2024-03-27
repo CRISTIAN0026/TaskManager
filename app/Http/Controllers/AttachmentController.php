@@ -34,14 +34,14 @@ class AttachmentController extends Controller
             'file' => 'required|file|mimes:pdf,jpg,jpeg,png',
         ]);
 
-        $path = $request->file('file')->store('attachments');
+        $path = $request->file('file')->store('attachments', 'public');
 
         $attachment = new Attachment;
         $attachment->file_path = $path;
         $attachment->user_id = auth()->id();
         $task->attachments()->save($attachment);
 
-        return redirect()->route('tasks.show', $task);
+        return redirect()->route('tasks.index', $task);
     }
 
     /**

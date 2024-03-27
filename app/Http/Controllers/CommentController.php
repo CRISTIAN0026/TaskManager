@@ -41,7 +41,7 @@ class CommentController extends Controller
         $comment->user_id = auth()->id();
         $task->comments()->save($comment);
 
-        return redirect()->route('tasks.show', $task);
+        return redirect()->route('tasks.index', $task);
     }
 
     /**

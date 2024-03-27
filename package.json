@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "dayjs": "^1.11.10",
+        "oh-vue-icons": "^1.0.0-rc3",
         "vue-router": "^4.3.0",
         "vuex": "^4.0.2"
     }

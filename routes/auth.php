@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\AttachmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -58,4 +59,19 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    Route::get('/tasks/{task}/attachments', [AttachmentController::class, 'index'])
+        ->name('attachments.index');
+
+    Route::get('/tasks/{task}/attachments/create', [AttachmentController::class, 'create'])
+        ->name('attachments.create');
+
+    Route::post('/tasks/{task}/attachments', [AttachmentController::class, 'store'])
+        ->name('attachments.store');
+
+    Route::get('/attachments/{attachment}', [AttachmentController::class, 'show'])
+        ->name('attachments.show');
+        
+    Route::delete('/attachments/{attachment}', [AttachmentController::class, 'destroy'])
+        ->name('attachments.destroy');
 });
