@@ -40,11 +40,11 @@ return new class extends Migration
         });
 
         User::create([
-            'name' => 'Cristian Paez',
-            'email' => 'cristianpaez009@gmail.com',
-            'password' => bcrypt('Tango$.001'),
+            'name' => env('USER_NAME'),
+            'email' => env('USER_EMAIL'),
+            'password' => bcrypt(env('USER_PASSWORD')),
             'email_verified_at' => Carbon::now(),
-            'is_super_admin' => true,
+            'is_super_admin' => env('USER_IS_SUPER_ADMIN'),
         ]);
     }
 
