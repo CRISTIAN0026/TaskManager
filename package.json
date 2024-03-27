@@ -19,6 +19,9 @@
     },
     "dependencies": {
         "dayjs": "^1.11.10",
+        "html2canvas": "^1.4.1",
+        "jspdf": "^2.5.1",
+        "jspdf-autotable": "^3.8.2",
         "oh-vue-icons": "^1.0.0-rc3",
         "vue-router": "^4.3.0",
         "vuex": "^4.0.2"

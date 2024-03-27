@@ -43,5 +43,8 @@ Route::post('/tasks/{task}/comments', [CommentController::class, 'store'])
     ->name('comments.store')
     ->middleware(['auth', 'verified']);
 
-
+Route::get('/tasks/report', [TaskController::class, 'generateReport'])
+    ->name('tasks.report')
+    ->middleware(['auth', 'verified']);
+    
 require __DIR__ . '/auth.php';

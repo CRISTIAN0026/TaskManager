@@ -9,7 +9,7 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'status', 'user_id'];
+    protected $fillable = ['title', 'description', 'status', 'user_id', 'completed_at'];
 
     public function user()
     {
@@ -29,5 +29,14 @@ class Task extends Model
     public function task()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function markAsCompleted($status)
+    {
+        if ($status == 'Completado' || $status == 'Bloqueado') {
+            $this->status = $status;
+            $this->completed_at = now();
+            $this->save();
+        }
     }
 }

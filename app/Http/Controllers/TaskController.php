@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Gate;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\File;
+use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
+
+
 
 class TaskController extends Controller
 {
@@ -85,9 +90,13 @@ class TaskController extends Controller
         ]);
         $task->update($validated);
 
+        if ($validated['status'] == 'Completado' || $validated['status'] == 'Bloqueado') {
+            $task->markAsCompleted($validated['status']);
+        }
+
         return redirect(route('tasks.index'));
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -104,9 +113,54 @@ class TaskController extends Controller
         ]);
         $task->update($validated);
 
+        if (isset($validated['status']) && ($validated['status'] == 'Completado' || $validated['status'] == 'Bloqueado')) {
+            $task->markAsCompleted($validated['status']);
+        }
+
         return redirect(route('tasks.index'));
     }
 
+    /**
+     * Generate a report of tasks completed within a specific time period.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function generateReport(Request $request)
+    {
+        $this->authorize('generateReport', Task::class);
+
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        $tasks = Task::whereBetween('created_at', [$validated['start_date'], $validated['end_date']])
+            ->with('user:id,name')
+            ->get();
+
+
+        $report = $tasks->map(function ($task) {
+            $completed_at = \Carbon\Carbon::parse($task->completed_at);
+            $created_at = \Carbon\Carbon::parse($task->created_at);
+
+            $duration = $task->completed_at
+                ? $completed_at->diffForHumans($created_at, [
+                    'parts' => 2,  
+                    'short' => true, 
+                ])
+                : 'En ejecución';
+
+            return [
+                'task_name' => $task->title,
+                'user' => $task->user->name,
+                'status' => $task->status,
+                'time' => $duration,
+            ];
+        });
+
+        return response()->json($report);
+    }
 
     /**
      * Remove the specified resource from storage.

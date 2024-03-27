@@ -29,7 +29,10 @@ const submitFiles = () => {
             form.reset();
         }
     });
-    
+
+    setTimeout(()=>{
+        location.reload();
+    },2000)
 };
 
 </script>

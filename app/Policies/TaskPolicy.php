@@ -58,6 +58,14 @@ class TaskPolicy
     }
 
     /**
+     * Determine whether the user can generate a report.
+     */
+    public function generateReport(User $user): bool
+    {
+        return $user->is_super_admin;
+    }
+
+    /**
      * Determine whether the user can attach files to the model.
      */
     public function attach(User $user, Task $task): bool
