@@ -1,3 +1,21 @@
+# TaskManager
+### Para intalar las dependencias
+
+Ejecuta `composer install`, para instalar las dependencias de laravel, depues seguido de eso ejeccuta `npm install` para instalar las dependencias de de Vue.
+
+### Ejecutar las migraciones y configurar la base de datos:
+
+Se tiene que configurar las variables de entorno de la base de datos en el archivo `.env`, igual forma también las variables
+del correo para poder usar el correo electrónico. Seguido de eso puede ejecutar el comando `php artisan migrate`.
+
+También tiene que configurar las variables de entorno para poder acceder como super administrador, por ejemplo:
+
+#### USER_NAME="Administrador"
+#### USER_EMAIL="admin@example.com"
+#### USER_PASSWORD="Brg$.001M"
+#### USER_IS_SUPER_ADMIN=true
+
+
 ## Acerca de la Aplicación de Tareas
 
 La Aplicación de Tareas es un sistema de administración de tareas con una sintaxis expresiva y elegante. Creemos que el desarrollo debe ser una experiencia agradable y creativa para ser verdaderamente satisfactoria. La Aplicación de Tareas facilita el desarrollo al simplificar las tareas comunes utilizadas en muchos proyectos web, tales como:
